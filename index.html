@@ -90,8 +90,8 @@
 
         <!-- Interactive Tutorial Screen -->
         <div id="tutorial-screen" class="screen">
-            <div class="tutorial-container">
-                <!-- Tutorial Dialog Overlay -->
+            <!-- Tutorial Dialog Overlay -->
+            <div class="tutorial-dialog-overlay">
                 <div class="tutorial-dialog">
                     <div class="tutorial-header">
                         <h3 id="tutorial-title">Tutorial Step</h3>
@@ -105,58 +105,58 @@
                         <button id="tutorial-next-btn" class="btn btn-primary">Next</button>
                     </div>
                 </div>
+            </div>
 
-                <!-- Tutorial Game View (same structure as game screen but simplified) -->
-                <div id="tutorial-game-container" class="game-container" style="display: none;">
-                    <!-- Header -->
-                    <header class="game-header">
-                        <div class="level-info">
-                            <span class="level-badge">Tutorial Level</span>
-                            <span class="target-info">Target: <span id="tutorial-target-word" class="target-word-display">I</span></span>
-                        </div>
-                        <div class="score-info">
-                            <span class="score-label">Moves:</span>
-                            <span id="tutorial-move-counter" class="score-value">0/3</span>
-                        </div>
-                    </header>
-
-                    <!-- Power-ups Bar (disabled during tutorial) -->
-                    <div class="powerups-bar">
-                        <button class="powerup-btn" disabled title="Sound Peek">
-                            <span class="powerup-icon">🔮</span>
-                            <span class="powerup-count">0</span>
-                        </button>
-                        <button class="powerup-btn" disabled title="Rewind">
-                            <span class="powerup-icon">⏪</span>
-                            <span class="powerup-count">0</span>
-                        </button>
-                        <button class="powerup-btn" disabled title="Morpheme Map">
-                            <span class="powerup-icon">🧮</span>
-                            <span class="powerup-count">0</span>
-                        </button>
+            <!-- Reuse Game Screen Container -->
+            <div class="game-container tutorial-game-view">
+                <!-- Header -->
+                <header class="game-header">
+                    <div class="level-info">
+                        <span class="level-badge">Tutorial Level</span>
+                        <span class="target-info">Target: <span id="tutorial-target-word" class="target-word-display"></span></span>
                     </div>
-
-                    <!-- Word Grid (shared with main game) -->
-                    <div id="word-grid" class="word-grid">
-                        <!-- Grid will be dynamically generated -->
+                    <div class="score-info">
+                        <span class="score-label">Moves:</span>
+                        <span id="tutorial-move-counter" class="score-value">0/3</span>
                     </div>
+                </header>
 
-                    <!-- Current Transformation Display -->
-                    <div class="transformation-display">
-                        <div class="transformation-label">Current Transformation:</div>
-                        <div id="current-transformation" class="transformation-text">Add Prefix UN-</div>
-                        <div id="constraint-hint" class="constraint-hint"></div>
-                    </div>
+                <!-- Power-ups Bar (disabled during tutorial) -->
+                <div class="powerups-bar tutorial-powerups">
+                    <button class="powerup-btn" disabled title="Sound Peek">
+                        <span class="powerup-icon">🔮</span>
+                        <span class="powerup-count">0</span>
+                    </button>
+                    <button class="powerup-btn" disabled title="Rewind">
+                        <span class="powerup-icon">⏪</span>
+                        <span class="powerup-count">0</span>
+                    </button>
+                    <button class="powerup-btn" disabled title="Morpheme Map">
+                        <span class="powerup-icon">🧮</span>
+                        <span class="powerup-count">0</span>
+                    </button>
+                </div>
 
-                    <!-- Transformation Controls -->
-                    <div class="controls">
-                        <button id="apply-transformation-btn" class="btn btn-primary btn-large pulse">
-                            <span>Apply Transformation</span>
-                        </button>
-                        <button id="skip-transformation-btn" class="btn btn-secondary" disabled>
-                            <span>Skip (disabled in tutorial)</span>
-                        </button>
-                    </div>
+                <!-- Word Grid -->
+                <div id="tutorial-word-grid" class="word-grid">
+                    <!-- Grid will be dynamically generated -->
+                </div>
+
+                <!-- Current Transformation Display -->
+                <div id="tutorial-transformation-display" class="transformation-display">
+                    <div class="transformation-label">Current Transformation:</div>
+                    <div id="tutorial-transformation-text" class="transformation-text"></div>
+                    <div id="tutorial-constraint-hint" class="constraint-hint"></div>
+                </div>
+
+                <!-- Transformation Controls -->
+                <div class="controls">
+                    <button id="tutorial-apply-btn" class="btn btn-primary btn-large pulse">
+                        <span>Apply Transformation</span>
+                    </button>
+                    <button id="tutorial-skip-btn-disabled" class="btn btn-secondary" disabled>
+                        <span>Skip (disabled in tutorial)</span>
+                    </button>
                 </div>
             </div>
         </div>

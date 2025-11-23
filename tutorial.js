@@ -27,28 +27,28 @@ class TutorialManager {
                 title: "Meet Your Word Grid",
                 message: "Here's a 3x3 grid of words. Your goal is to transform ALL of these words into the target word shown at the top.",
                 action: "none",
-                highlightElements: [".word-grid", ".target-word-display"],
+                highlightElements: ["#tutorial-word-grid", "#tutorial-target-word"],
                 showGrid: true
             },
             {
                 title: "The Target Word",
                 message: "Look at the target: 'I'. Every word in the grid must become 'I'. But how? That's where transformations come in!",
                 action: "none",
-                highlightElements: [".target-word-display"],
+                highlightElements: ["#tutorial-target-word"],
                 showGrid: true
             },
             {
                 title: "Your First Transformation",
                 message: "Each level has a sequence of transformations. The first one is shown here: 'Delete Suffix -SH'. This will only affect words ending in 'SH'.",
                 action: "none",
-                highlightElements: [".transformation-display"],
+                highlightElements: ["#tutorial-transformation-display"],
                 showGrid: true
             },
             {
                 title: "Which Words Will Change?",
                 message: "Look at the grid. Which words end in 'SH'? Those are: DISH, FISH, DASH, LASH, and MASH. Only these words will be transformed! The others (MISS, KISS, TOSS, BOSS) will stay the same for now.",
                 action: "none",
-                highlightElements: [".word-grid", ".transformation-display"],
+                highlightElements: ["#tutorial-word-grid", "#tutorial-transformation-display"],
                 showGrid: true,
                 highlightWords: [0, 1, 2, 3, 4] // Indices of words ending in SH
             },
@@ -56,7 +56,7 @@ class TutorialManager {
                 title: "Apply the Transformation",
                 message: "Now it's your turn! Click the 'Apply Transformation' button to remove the -SH suffix from matching words. Watch what happens!",
                 action: "wait_for_transformation",
-                highlightElements: ["#apply-transformation-btn"],
+                highlightElements: ["#tutorial-apply-btn"],
                 showGrid: true,
                 expectedAction: "apply"
             },
@@ -64,14 +64,14 @@ class TutorialManager {
                 title: "Words Changed!",
                 message: "Great! DISH→DI, FISH→FI, DASH→DA, LASH→LA, MASH→MA. Notice how MISS, KISS, TOSS, and BOSS didn't change? That's because they don't end in 'SH'.",
                 action: "none",
-                highlightElements: [".word-grid"],
+                highlightElements: ["#tutorial-word-grid"],
                 showGrid: true
             },
             {
                 title: "Next Transformation",
                 message: "Now we have a new transformation: 'Delete Vowel A'. This will only affect words containing the letter 'A'. Can you spot them?",
                 action: "none",
-                highlightElements: [".transformation-display"],
+                highlightElements: ["#tutorial-transformation-display"],
                 showGrid: true,
                 highlightWords: [2, 3, 4] // DA, LA, MA have 'A'
             },
@@ -79,7 +79,7 @@ class TutorialManager {
                 title: "Your Turn Again",
                 message: "Click 'Apply Transformation' to remove the letter 'A' from DA, LA, and MA. Think about what they'll become!",
                 action: "wait_for_transformation",
-                highlightElements: ["#apply-transformation-btn"],
+                highlightElements: ["#tutorial-apply-btn"],
                 showGrid: true,
                 expectedAction: "apply"
             },
@@ -87,21 +87,21 @@ class TutorialManager {
                 title: "Getting Closer!",
                 message: "Nice! DA→D, LA→L, MA→M. We now have different letters, but we still need to transform them all into 'I'.",
                 action: "none",
-                highlightElements: [".word-grid"],
+                highlightElements: ["#tutorial-word-grid"],
                 showGrid: true
             },
             {
                 title: "Final Transformation",
                 message: "The last transformation is 'Add Vowel I'. This will add the letter 'I' to ALL words in the grid. This is our chance to reach the target!",
                 action: "none",
-                highlightElements: [".transformation-display"],
+                highlightElements: ["#tutorial-transformation-display"],
                 showGrid: true
             },
             {
                 title: "Complete the Puzzle!",
                 message: "Apply the final transformation and watch all words become 'I'. You're about to win your first level!",
                 action: "wait_for_transformation",
-                highlightElements: ["#apply-transformation-btn"],
+                highlightElements: ["#tutorial-apply-btn"],
                 showGrid: true,
                 expectedAction: "apply"
             },
@@ -109,14 +109,14 @@ class TutorialManager {
                 title: "You Did It!",
                 message: "Congratulations! All words are now 'I'. You've completed your first puzzle! The key insight: transformations only affect words meeting specific conditions. Understanding these constraints is your strategy!",
                 action: "none",
-                highlightElements: [".word-grid"],
+                highlightElements: ["#tutorial-word-grid"],
                 showGrid: true
             },
             {
                 title: "Power-Ups Help You Strategize",
                 message: "As you play, you'll earn power-ups:\n🔮 Sound Peek - See upcoming constraints\n⏪ Rewind - Undo mistakes\n🧮 Morpheme Map - Analyze word structure\n\nUse these to plan your strategy!",
                 action: "none",
-                highlightElements: [".powerups-bar"],
+                highlightElements: [".tutorial-powerups"],
                 showGrid: true
             },
             {
@@ -214,11 +214,12 @@ class TutorialManager {
         }
 
         // Show/hide game grid
+        const gameView = document.querySelector('.tutorial-game-view');
         if (step.showGrid) {
-            document.getElementById('tutorial-game-container').style.display = 'block';
-            this.ui.updateAll();
+            gameView.style.display = 'block';
+            this.updateTutorialDisplay();
         } else {
-            document.getElementById('tutorial-game-container').style.display = 'none';
+            gameView.style.display = 'none';
         }
 
         // Apply highlights
@@ -229,6 +230,71 @@ class TutorialManager {
             this.highlightWords(step.highlightWords);
         } else {
             this.clearWordHighlights();
+        }
+    }
+
+    /**
+     * Update tutorial-specific display elements
+     */
+    updateTutorialDisplay() {
+        // Update target word
+        document.getElementById('tutorial-target-word').textContent = this.game.targetWord;
+
+        // Update move counter
+        const optimal = this.game.transformationSequence.length;
+        document.getElementById('tutorial-move-counter').textContent = `${this.game.moveCount}/${optimal}`;
+
+        // Update word grid
+        this.updateTutorialGrid();
+
+        // Update transformation display
+        this.updateTutorialTransformation();
+    }
+
+    /**
+     * Update tutorial word grid
+     */
+    updateTutorialGrid() {
+        const gridElement = document.getElementById('tutorial-word-grid');
+        gridElement.innerHTML = '';
+
+        // Set grid size class
+        const gridSize = this.game.currentLevel.gridSize;
+        gridElement.className = `word-grid grid-${gridSize}x${gridSize}`;
+
+        // Create tiles
+        this.game.grid.forEach((word, index) => {
+            const tile = document.createElement('div');
+            tile.className = 'word-tile';
+            tile.textContent = word;
+            tile.dataset.index = index;
+
+            // Highlight if it's the target word
+            if (word === this.game.targetWord) {
+                tile.classList.add('target');
+            }
+
+            gridElement.appendChild(tile);
+        });
+    }
+
+    /**
+     * Update tutorial transformation display
+     */
+    updateTutorialTransformation() {
+        const transformation = this.game.getCurrentTransformation();
+        const transformationText = document.getElementById('tutorial-transformation-text');
+        const constraintHint = document.getElementById('tutorial-constraint-hint');
+
+        if (transformation) {
+            transformationText.textContent = transformation;
+            const constraint = this.game.getCurrentConstraintDescription();
+            constraintHint.textContent = `Constraint: ${constraint}`;
+            constraintHint.classList.add('active');
+        } else {
+            transformationText.textContent = 'Complete!';
+            constraintHint.textContent = '';
+            constraintHint.classList.remove('active');
         }
     }
 
@@ -254,7 +320,7 @@ class TutorialManager {
      * Highlight specific words in the grid
      */
     highlightWords(indices) {
-        const tiles = document.querySelectorAll('.word-tile');
+        const tiles = document.querySelectorAll('#tutorial-word-grid .word-tile');
         tiles.forEach((tile, index) => {
             if (indices.includes(index)) {
                 tile.classList.add('tutorial-word-highlight');
@@ -268,7 +334,7 @@ class TutorialManager {
      * Clear word highlights
      */
     clearWordHighlights() {
-        document.querySelectorAll('.tutorial-word-highlight').forEach(el => {
+        document.querySelectorAll('#tutorial-word-grid .tutorial-word-highlight').forEach(el => {
             el.classList.remove('tutorial-word-highlight');
         });
     }

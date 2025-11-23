@@ -104,6 +104,16 @@ class UIManager {
             }
         });
 
+        document.getElementById('tutorial-apply-btn').addEventListener('click', () => {
+            if (this.tutorial && this.tutorial.isActive) {
+                const result = this.game.handleMove();
+                if (result) {
+                    this.tutorial.updateTutorialDisplay();
+                    this.tutorial.handleTransformation();
+                }
+            }
+        });
+
         // Level select
         document.getElementById('close-level-select-btn').addEventListener('click', () => {
             this.switchToMainMenu();
