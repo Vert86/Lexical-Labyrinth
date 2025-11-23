@@ -253,6 +253,106 @@ body {
     line-height: 1.6;
 }
 
+.instruction-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ===== TUTORIAL SCREEN ===== */
+.tutorial-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.tutorial-dialog {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-lg);
+    animation: fadeInDown 0.5s ease;
+}
+
+.tutorial-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.tutorial-header h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.tutorial-progress {
+    font-size: 0.9rem;
+    color: #666;
+    background: #f0f0f0;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.tutorial-content {
+    margin-bottom: 25px;
+}
+
+.tutorial-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.tutorial-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.tutorial-controls button {
+    flex: 1;
+}
+
+/* Tutorial highlights */
+.tutorial-highlight {
+    position: relative;
+    animation: tutorial-pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.5) !important;
+    border-radius: var(--border-radius);
+}
+
+@keyframes tutorial-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.5) !important;
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(243, 156, 18, 0.7) !important;
+    }
+}
+
+.tutorial-word-highlight {
+    outline: 4px solid var(--warning-color) !important;
+    outline-offset: 2px;
+    animation: tutorial-word-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes tutorial-word-pulse {
+    0%, 100% {
+        outline-color: var(--warning-color);
+    }
+    50% {
+        outline-color: rgba(243, 156, 18, 0.5);
+    }
+}
+
 /* ===== LEVEL SELECT ===== */
 .level-grid {
     display: grid;
@@ -1036,6 +1136,22 @@ body {
     .btn-large {
         padding: 14px 24px;
         font-size: 1rem;
+    }
+
+    .tutorial-dialog {
+        padding: 20px;
+    }
+
+    .tutorial-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .tutorial-content p {
+        font-size: 1rem;
+    }
+
+    .tutorial-controls {
+        flex-direction: column;
     }
 }
 

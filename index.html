@@ -81,7 +81,83 @@
                         </div>
                     </div>
                 </div>
-                <button id="close-instructions-btn" class="btn btn-primary">Got it!</button>
+                <div class="instruction-buttons">
+                    <button id="start-tutorial-btn" class="btn btn-primary btn-large">Play Interactive Tutorial</button>
+                    <button id="close-instructions-btn" class="btn btn-secondary">Skip Tutorial</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Tutorial Screen -->
+        <div id="tutorial-screen" class="screen">
+            <div class="tutorial-container">
+                <!-- Tutorial Dialog Overlay -->
+                <div class="tutorial-dialog">
+                    <div class="tutorial-header">
+                        <h3 id="tutorial-title">Tutorial Step</h3>
+                        <span id="tutorial-progress" class="tutorial-progress">Step 1 of 15</span>
+                    </div>
+                    <div class="tutorial-content">
+                        <p id="tutorial-message">Tutorial message goes here</p>
+                    </div>
+                    <div class="tutorial-controls">
+                        <button id="tutorial-skip-btn" class="btn btn-secondary">Skip Tutorial</button>
+                        <button id="tutorial-next-btn" class="btn btn-primary">Next</button>
+                    </div>
+                </div>
+
+                <!-- Tutorial Game View (same structure as game screen but simplified) -->
+                <div id="tutorial-game-container" class="game-container" style="display: none;">
+                    <!-- Header -->
+                    <header class="game-header">
+                        <div class="level-info">
+                            <span class="level-badge">Tutorial Level</span>
+                            <span class="target-info">Target: <span id="tutorial-target-word" class="target-word-display">I</span></span>
+                        </div>
+                        <div class="score-info">
+                            <span class="score-label">Moves:</span>
+                            <span id="tutorial-move-counter" class="score-value">0/3</span>
+                        </div>
+                    </header>
+
+                    <!-- Power-ups Bar (disabled during tutorial) -->
+                    <div class="powerups-bar">
+                        <button class="powerup-btn" disabled title="Sound Peek">
+                            <span class="powerup-icon">🔮</span>
+                            <span class="powerup-count">0</span>
+                        </button>
+                        <button class="powerup-btn" disabled title="Rewind">
+                            <span class="powerup-icon">⏪</span>
+                            <span class="powerup-count">0</span>
+                        </button>
+                        <button class="powerup-btn" disabled title="Morpheme Map">
+                            <span class="powerup-icon">🧮</span>
+                            <span class="powerup-count">0</span>
+                        </button>
+                    </div>
+
+                    <!-- Word Grid (shared with main game) -->
+                    <div id="word-grid" class="word-grid">
+                        <!-- Grid will be dynamically generated -->
+                    </div>
+
+                    <!-- Current Transformation Display -->
+                    <div class="transformation-display">
+                        <div class="transformation-label">Current Transformation:</div>
+                        <div id="current-transformation" class="transformation-text">Add Prefix UN-</div>
+                        <div id="constraint-hint" class="constraint-hint"></div>
+                    </div>
+
+                    <!-- Transformation Controls -->
+                    <div class="controls">
+                        <button id="apply-transformation-btn" class="btn btn-primary btn-large pulse">
+                            <span>Apply Transformation</span>
+                        </button>
+                        <button id="skip-transformation-btn" class="btn btn-secondary" disabled>
+                            <span>Skip (disabled in tutorial)</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -237,6 +313,7 @@
     <script src="levels.js"></script>
     <script src="powerups.js"></script>
     <script src="game.js"></script>
+    <script src="tutorial.js"></script>
     <script src="ui.js"></script>
     <script src="app.js"></script>
 </body>

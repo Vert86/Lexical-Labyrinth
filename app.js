@@ -9,6 +9,7 @@
     // Global game instance
     let game = null;
     let ui = null;
+    let tutorial = null;
 
     /**
      * Initialize the application
@@ -22,6 +23,10 @@
 
             // Create UI manager
             ui = new UIManager(game);
+
+            // Create tutorial manager
+            tutorial = new TutorialManager(game, ui);
+            ui.tutorial = tutorial;
 
             console.log('✓ Game initialized successfully');
             console.log(`📊 Progress: Level ${game.currentLevelId}, ${game.completedLevels.size} levels completed`);
@@ -211,9 +216,13 @@
                 game.grid = game.grid.map(() => game.targetWord);
                 game.handleWin();
                 console.log('Level completed!');
+            },
+            resetTutorial: () => {
+                tutorial.reset();
+                console.log('Tutorial reset!');
             }
         };
-        console.log('🛠 Debug commands available: DEBUG.resetProgress(), DEBUG.unlockAllLevels(), DEBUG.addAllPowerups(), DEBUG.skipToLevel(n), DEBUG.completeLevel()');
+        console.log('🛠 Debug commands available: DEBUG.resetProgress(), DEBUG.unlockAllLevels(), DEBUG.addAllPowerups(), DEBUG.skipToLevel(n), DEBUG.completeLevel(), DEBUG.resetTutorial()');
     }
 
     // Initialize when DOM is ready
@@ -227,7 +236,8 @@
     window.LexicalLabyrinthApp = {
         version: '1.0.0',
         game: () => game,
-        ui: () => ui
+        ui: () => ui,
+        tutorial: () => tutorial
     };
 
 })();

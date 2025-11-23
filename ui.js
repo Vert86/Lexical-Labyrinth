@@ -12,11 +12,15 @@ class UIManager {
         this.screens = {
             mainMenu: document.getElementById('main-menu'),
             howToPlay: document.getElementById('how-to-play'),
+            tutorialScreen: document.getElementById('tutorial-screen'),
             levelSelect: document.getElementById('level-select'),
             gameScreen: document.getElementById('game-screen'),
             winScreen: document.getElementById('win-screen'),
             loseScreen: document.getElementById('lose-screen')
         };
+
+        // Tutorial manager reference (will be set later)
+        this.tutorial = null;
 
         // Game elements
         this.wordGrid = document.getElementById('word-grid');
@@ -78,6 +82,28 @@ class UIManager {
             this.switchToMainMenu();
         });
 
+        document.getElementById('start-tutorial-btn').addEventListener('click', () => {
+            if (this.tutorial) {
+                this.switchToTutorial();
+                this.tutorial.start();
+            }
+        });
+
+        // Tutorial controls
+        document.getElementById('tutorial-next-btn').addEventListener('click', () => {
+            if (this.tutorial) {
+                this.tutorial.nextStep();
+            }
+        });
+
+        document.getElementById('tutorial-skip-btn').addEventListener('click', () => {
+            if (this.tutorial) {
+                if (confirm('Are you sure you want to skip the tutorial?')) {
+                    this.tutorial.skip();
+                }
+            }
+        });
+
         // Level select
         document.getElementById('close-level-select-btn').addEventListener('click', () => {
             this.switchToMainMenu();
@@ -94,6 +120,11 @@ class UIManager {
             const result = this.game.handleMove();
             if (result) {
                 this.updateAll();
+
+                // Handle tutorial progression
+                if (this.tutorial && this.tutorial.isActive) {
+                    this.tutorial.handleTransformation();
+                }
             }
         });
 
@@ -181,6 +212,13 @@ class UIManager {
      */
     switchToGameScreen() {
         this.switchToScreen('gameScreen');
+    }
+
+    /**
+     * Switch to tutorial screen
+     */
+    switchToTutorial() {
+        this.switchToScreen('tutorialScreen');
     }
 
     /**
